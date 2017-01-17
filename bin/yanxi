@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "yanxi"
+
+root_dir = Dir.pwd
+
+yanxi = Yanxi::Parser.new
+
+yanxi.parse(File.join(root_dir, "log", "development.log"))
