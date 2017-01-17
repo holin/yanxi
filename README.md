@@ -2,6 +2,8 @@
 
 Parse Rails development.log file, get response time, database query and partial rendered time. Run an HTTP server to checkout and filter these infomation
 
+![Screenshots 1](./screenshots/result1.png)
+
 ## Installation
 
 Add this line to your application's Gemfile:
