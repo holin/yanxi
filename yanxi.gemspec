@@ -9,15 +9,15 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Holin"]
   spec.email         = ["holin.he@gmail.com"]
 
-  spec.summary       = %q{Parse rails development.log file, and export htmls}
-  spec.description   = %q{Parse rails development.log file, and export htmls}
-  spec.homepage      = 'http://mygemserver.com'
+  spec.summary       = %q{Parse Rails development.log file, get response time, database query and partial rendered time. Run an HTTP server to checkout and filter these infomation}
+  spec.description   = %q{Parse Rails development.log file, get response time, database query and partial rendered time. Run an HTTP server to checkout and filter these infomation}
+  spec.homepage      = 'https://github.com/holin/yanxi'
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = 'http://mygemserver.com'
+    spec.metadata['allowed_push_host'] = 'https://github.com/holin/yanxi'
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
