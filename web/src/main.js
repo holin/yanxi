@@ -104,7 +104,8 @@ let vm = new Vue({
   },
   data: {
     loading: '',
-    searchFor: '',
+    filterVal: 0,
+    filterKind: '',
     moreParams: {},
     fields: tableColumns,
     sortOrder: [{
@@ -151,14 +152,48 @@ let vm = new Vue({
         json["sqls_html"] = json["sqls"].join("<br>")
         json["partials_html"] = json["partials"].join("<br>")
 
-        json['sqls'] = json['sqls'].sort(function(a, b) {
-          return b[0] - a[0];
-        });
-        json['partials'] = json['partials'].sort(function(a, b) {
+
+
+        var sqls = json['sqls'];
+        var tmp_sqls = [];
+        if (this.filterKind === "sql") {
+          for (var index = 0; index < sqls.length; index++) {
+            var sql = sqls[index];
+            if (parseFloat(sql[0]) > this.filterVal) {
+              tmp_sqls.push(sql);
+            }
+          }
+        } else {
+          tmp_sqls = sqls;
+        }
+        json['sqls'] = tmp_sqls.sort(function(a, b) {
           return b[0] - a[0];
         });
 
-        transformed['data'].push(json)
+        var partials = json['partials']
+        var tmp_partials = [];
+        if (this.filterKind === "rendered") {
+          for (var index = 0; index < partials.length; index++) {
+            var sql = partials[index];
+            if (sql[0] > this.filterVal) {
+              tmp_partials.push(sql);
+            }
+          }
+        } else {
+          tmp_partials = partials;
+        }
+        json['partials'] = tmp_partials.sort(function(a, b) {
+          return b[0] - a[0];
+        });
+
+        if (this.filterKind === "complete") {
+          if (json["duration"] > this.filterVal) {
+            transformed['data'].push(json);
+          }
+        } else {
+          transformed['data'].push(json);
+        }
+
       }
       var sortField = this.$refs.vuetable.sortOrder[0].sortField;
 
@@ -172,8 +207,6 @@ let vm = new Vue({
           }
         });
       }
-
-
 
       return transformed
     },
@@ -204,15 +237,12 @@ let vm = new Vue({
       return value[0];
     },
     setFilter: function() {
-      this.moreParams = {
-        'filter': this.searchFor
-      }
       this.$nextTick(function() {
         this.$refs.vuetable.refresh()
       })
     },
     resetFilter: function() {
-      this.searchFor = ''
+      this.filterVal = 0
       this.setFilter()
     },
     preg_quote: function( str ) {
@@ -241,12 +271,7 @@ let vm = new Vue({
       this.$refs.paginationInfo.setPaginationData(response.data)
 
       let data = response.data.data
-      if (this.searchFor !== '') {
-        for (let n in data) {
-          data[n].name = this.highlight(this.searchFor, data[n].name)
-          data[n].email = this.highlight(this.searchFor, data[n].email)
-        }
-      }
+
     },
     onLoadError (response) {
       if (response.status == 400) {

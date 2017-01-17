@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>vue2</title>
+    <title>Yanxi Export</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <style type="text/css">
@@ -88,19 +88,18 @@
 
                   <div class="ui grid">
                       <div class="ui left aligned nine wide column">
-                          <div class="ui labeled icon input">
-                            <div class="ui label">Search:</div>
-                            <input v-model="searchFor" class="ui input" @keyup.enter="setFilter">
-                            <i class="search icon"></i>
+                          <div class="ui labeled right input">
+                            <div class="ui label">Filter:</div>
+                            <select v-model="filterKind" class="ui select" @change="setFilter">
+                              <option value="">No filter</option>
+                              <option value="rendered">Rendered</option>
+                              <option value="sql">SQL</option>
+                              <option value="complete">Complete</option>
+                            </select>
+                            <input type="number" v-model="filterVal" class="input" @keyup.enter="setFilter">
+                            <span class="ui basic label">ms</span>
                           </div>
-                          <button class="ui button primary" @click="setFilter">Go</button>
-                          <button class="ui button" @click="resetFilter">Reset</button>
-                      </div>
-                      <div class="ui right aligned seven wide column">
-                        <button class="ui basic button" id="settingsBtn" @click="showSettingsModal">
-                          <i class="setting icon"></i>
-                          Settings
-                        </button>
+                          <button class="ui button primary" @click="setFilter">Filter</button>
                       </div>
                   </div><!-- ui grid -->
 

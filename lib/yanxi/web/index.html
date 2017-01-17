@@ -1,22 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Yanxi Export</title>
-        <meta charset="utf-8">
-    </head>
-    <body>
-      <div id="app">
-        {{ message }}
-      </div>
-
-      <script src="./js/vue.js"></script>
-      <script>
-        var app = new Vue({
-          el: '#app',
-          data: {
-            message: 'Hello Vue!'
-          }
-        })
-      </script>
-    </body>
-</html>
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><title>Yanxi Export</title><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css media=screen title="no title" charset=utf-8><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css><style type=text/css>.list-item {
+        margin: 5px 0;
+      }
+      .time {
+        color: orangered;
+        margin-right: 10px;
+      }
+      .sql {
+      }
+      .ui.vertical.stripe h3 {
+        font-size: 2em;
+      }
+      .secondary.pointing.menu .toc.item {
+        display: none;
+      }
+      .vuetable {
+        margin-top: 1em !important;
+      }
+      .vuetable-wrapper.ui.basic.segment {
+        padding: 0em;
+      }
+      .vuetable button.ui.button {
+        padding: .5em .5em;
+        font-weight: 400;
+      }
+      .vuetable button.ui.button i.icon {
+        margin: 0;
+      }
+      .vuetable th.sortable:hover {
+        color: #2185d0;
+        cursor: pointer;
+      }
+      .vuetable-actions {
+        width: 15%;
+        padding: 12px 0px;
+        text-align: center;
+      }
+      .vuetable-pagination {
+        background: #f9fafb !important;
+      }
+      .vuetable-pagination-info {
+        margin-top: auto;
+        margin-bottom: auto;
+      }
+      .highlight {
+        background-color: yellow;
+      }
+      .vuetable-detail-row {
+        height: 200px;
+      }
+      .detail-row {
+        margin-left: 40px;
+      }
+      .expand-transition {
+        transition: all .5s ease;
+      }
+      .expand-enter, .expand-leave {
+        height: 0;
+        opacity: 0;
+      }
+      tr.odd {
+        background-color: #e6f5ff;
+      }
+      body {
+        overflow-y: scroll;
+      }</style><link href=/static/css/app.85b83efe1d801160ed04da4ab170fb2a.css rel=stylesheet></head><body><div class="ui vertical segment"><div class="ui container"><div id=app class="ui vertical stripe segment"><div id=content class="ui basic segment"><h3 class="ui header">List of Queries</h3><div class="ui grid"><div class="ui left aligned nine wide column"><div class="ui labeled right input"><div class="ui label">Filter:</div><select v-model=filterKind class="ui select" @change=setFilter><option value="">No filter</option><option value=rendered>Rendered</option><option value=sql>SQL</option><option value=complete>Complete</option></select><input type=number v-model=filterVal class=input @keyup.enter=setFilter> <span class="ui basic label">ms</span></div><button class="ui button primary" @click=setFilter>Filter</button></div></div><div :class="[{'vuetable-wrapper ui basic segment': true}, loading]"><vuetable ref=vuetable api-url=static/data.json :fields=fields pagination-path=pagination :sort-order=sortOrder :multi-sort=multiSort :per-page=perPage :append-params=moreParams detail-row-component=my-detail-row detail-row-id=id detail-row-transition=expand row-class-callback=rowClassCB @vuetable:pagination-data=onPaginationData @vuetable:load-success=onLoadSuccess @vuetable:loading=showLoader @vuetable:loaded=hideLoader @vuetable:cell-clicked=onCellClicked></vuetable><div class="vuetable-pagination ui bottom attached segment grid"><vuetable-pagination-info ref=paginationInfo :info-template=paginationInfoTemplate></vuetable-pagination-info><component :is=paginationComponent ref=pagination @vuetable-pagination:change-page=onChangePage></component></div></div></div><div class="ui small modal" id=settingsModal><div class=header>Settings</div><div class="content ui form"><div class=field><div class="ui checkbox"><input type=checkbox v-model=multiSort><label>Multisort (use Alt+Click)</label></div></div><div class="ui divider"></div><div class=field><label>Pagination:</label><select class="ui simple dropdown" v-model=paginationComponent><option value=vuetable-pagination>vuetable-pagination</option><option value=vuetable-pagination-dropdown>vuetable-pagination-dropdown</option></select></div><div class=field><label>Per Page:</label><select class="ui simple dropdown" v-model=perPage><option :value=10>10</option><option :value=15>15</option><option :value=20>20</option><option :value=25>25</option></select></div><div class="ui fluid card"><div class=content><div class=header>Visible fields</div></div><div class=content><div v-for="field in fields" class=field><div class="ui checkbox"><input type=checkbox v-model=field.visible><label>{{ getFieldTitle(field) }}</label></div></div></div></div></div><div class=actions><div class="ui cancel button">Close</div></div></div></div></div></div><script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js charset=utf-8></script><script src=https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js charset=utf-8></script><script src=https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js></script><script type=text/javascript src=/static/js/manifest.e158313d260dfacd30ba.js></script><script type=text/javascript src=/static/js/vendor.323503aba588387c0c3d.js></script><script type=text/javascript src=/static/js/app.b34914c4788e30883155.js></script></body></html>
