@@ -655,7 +655,8 @@ export default {
       }
     },
     isVisibleDetailRow: function(rowId) {
-      return this.visibleDetailRows.indexOf( rowId ) >= 0
+      return true
+      // return this.visibleDetailRows.indexOf( rowId ) >= 0
     },
     showDetailRow: function(rowId) {
       if (!this.isVisibleDetailRow(rowId)) {

@@ -81,11 +81,6 @@ let tableColumns = [
     name: 'action',
     title: 'Controller#Action',
   },
-  // {
-  //   name: 'partials',
-  //   title: 'Rendered',
-  //   sortField: 'partials'
-  // },
   {
     name: 'complete',
     title: 'Result',
@@ -152,8 +147,6 @@ let vm = new Vue({
         json["sqls_html"] = json["sqls"].join("<br>")
         json["partials_html"] = json["partials"].join("<br>")
 
-
-
         var sqls = json['sqls'];
         var tmp_sqls = [];
         if (this.filterKind === "sql") {
@@ -185,6 +178,16 @@ let vm = new Vue({
         json['partials'] = tmp_partials.sort(function(a, b) {
           return b[0] - a[0];
         });
+
+        if (this.filterKind === "sql") {
+          if (json['sqls'].length == 0) {
+            continue
+          }
+        } else if (this.filterKind === "rendered") {
+          if (json['partials'].length == 0) {
+            continue
+          }
+        }
 
         if (this.filterKind === "complete") {
           if (json["duration"] > this.filterVal) {
@@ -269,9 +272,7 @@ let vm = new Vue({
     onLoadSuccess (response) {
       // set pagination data to pagination-info component
       this.$refs.paginationInfo.setPaginationData(response.data)
-
       let data = response.data.data
-
     },
     onLoadError (response) {
       if (response.status == 400) {
