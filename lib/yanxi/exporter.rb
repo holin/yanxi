@@ -26,12 +26,31 @@ module Yanxi
         data: json_requests.values
       }
       File.open(data_file, "w"){ |f| f.write(JSON.dump(json)) }
+      puts "I have PID #{Process.pid}"
       puts "Please checkout export at #{dest_dir}"
       port = 3000 + (rand*10000).to_i
       url = "http://0.0.0.0:#{port}"
       puts "visit: #{url}"
+
+      # Trap ^C
+      Signal.trap("INT") {
+        shut_down
+        exit
+      }
+
+      # Trap `Kill `
+      Signal.trap("TERM") {
+        shut_down
+        exit
+      }
+
       # run http server
       EmbedServer.new(dest_dir, port: port).run
+    end
+
+    # Signal catching
+    def shut_down
+      puts "\nShutting down gracefully..."
     end
 
   end
